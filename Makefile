@@ -34,7 +34,7 @@ RM		:=	rm -f
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME) -lXext -lX11
+	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME) -lXext -lX11 -lm
 
 $(LIBS_TARGET):
 	make bonus -C $(@D)

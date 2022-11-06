@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <math.h>
 #include "mlx.h"
 #include "libft/libft.h"
 #include "fract-ol.h"
@@ -44,11 +45,31 @@ int mandelbrot(float x, float y)
 	x = 0;
 	y = 0;
 	i = 0;
-	while ((x * x) + (y * y) <= 4 && i < 255)
+	while ((x * x) + (y * y) <= 4 && i < 1000)
 	{
 		tmp = x * x - y * y + x0;
 		y = 2 * x * y + y0;
 		x = tmp;
+		i++;
+	}
+	return (i);
+}
+
+int julia(float x, float y)
+{
+	float zx;
+	float zy;
+	int i;
+	float tmp;
+
+	zx = x / 800 * 4 - 2;
+	zy = y / 600 * 4 - 2;
+	i = 0;
+	while (zx * zx + zy * zy < 4 && i < 1000)
+	{
+		tmp = zx * zx - zy * zy;
+		zy = 2 * zx * zy + 0.11301;
+		zx = tmp + -0.74543;
 		i++;
 	}
 	return (i);
@@ -73,15 +94,19 @@ int	main()
 	img_ptr = mlx_new_image(vars.mlx_ptr, 800, 600);
 	buffer = mlx_get_data_addr(img_ptr, &pixel_bits, &line_bytes, &endian);
 
-//	if (pixel_bits != 32)
-//		color = mlx_get_color_value(vars.mlx_ptr, color);
 	y = 0;
 	while (y < 600)
 	{
 		x = 0;
 		while (x < 800)
 		{
-			color = mandelbrot((float)x, (float)y) * 10000;
+			color = julia((float)x, (float)y);
+			if (color == 255)
+				color = 0x000000;
+			else
+				color = pow(color, 5);
+			if (pixel_bits != 32)
+				color = mlx_get_color_value(vars.mlx_ptr, color);
 			pixel = (y * line_bytes) + (x * 4);
 			if (endian)
 			{
