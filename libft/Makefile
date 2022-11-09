@@ -6,7 +6,7 @@
 #    By: lorobert <marvin@42lausanne.ch>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/10 14:40:57 by lorobert          #+#    #+#              #
-#    Updated: 2022/10/21 08:37:04 by lorobert         ###   ########.fr        #
+#    Updated: 2022/11/09 13:45:57 by lorobert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,8 +45,8 @@ SRCS	:=	ft_isalnum.c \
 			ft_putchar_fd.c \
 			ft_putstr_fd.c \
 			ft_putendl_fd.c \
-			ft_putnbr_fd.c
-SRCSB	:=	ft_lstnew.c \
+			ft_putnbr_fd.c \
+			ft_lstnew.c \
 			ft_lstadd_front.c \
 			ft_lstsize.c \
 			ft_lstlast.c \
@@ -64,10 +64,8 @@ SRCSB	:=	ft_lstnew.c \
 			ft_printf_int.c \
 			ft_printf_ptr.c \
 			ft_printf_string.c \
-			ft_printf_uint.c \
-			$(SRCS)
+			ft_printf_uint.c
 OBJS	:=	$(SRCS:.c=.o)
-OBJSB	:=	$(SRCSB:.c=.o)
 
 CC		:=	gcc
 CFLAGS	:=	-Wall -Wextra -Werror -g
@@ -82,11 +80,8 @@ all:		$(NAME)
 $(NAME):	$(OBJS)
 		ar rc $(NAME) $(OBJS)
 
-bonus:		$(OBJSB)
-		ar rc $(NAME) $(OBJSB)
-
 clean:
-		$(RM) $(OBJSB)
+		$(RM) $(OBJS)
 
 fclean:		clean
 		$(RM) $(NAME)

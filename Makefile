@@ -6,19 +6,22 @@
 #    By: lorobert <marvin@42lausanne.ch>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/10 14:40:57 by lorobert          #+#    #+#              #
-#    Updated: 2022/10/21 08:37:04 by lorobert         ###   ########.fr        #
+#    Updated: 2022/11/09 10:35:59 by lorobert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:=	fractol
 
-SRCS	:=	fract-ol.c
+SRCS	:=	fract-ol.c \
+			mandelbrot.c \
+			julia.c \
+			colors.c
 OBJS	:=	$(SRCS:.c=.o)
 
 LIBS	:=	ft mlx
-LIBS_TARGET	:=	libft/libft.a /usr/local/lib/libmlx.a
+LIBS_TARGET	:=	libft/libft.a mlx/libmlx.a
 
-INCS	:=	libft /usr/local/include
+INCS	:=	libft mlx
 
 CC		:=	gcc
 CFLAGS	:=	-Wall -Wextra -Werror -g
@@ -34,17 +37,17 @@ RM		:=	rm -f
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME) -lXext -lX11 -lm
+	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME) -framework OpenGL -framework Appkit -lm
 
 $(LIBS_TARGET):
-	make bonus -C $(@D)
+	make -C $(@D)
 
 clean:
-	for f in $(dir $(LIBS_TARGET)); do make -C $$f clean; done
+	make -C ./libft clean
 	$(RM) $(OBJS)
 
 fclean: clean
-	for f in $(dir $(LIBS_TARGET)); do make -C $$f fclean; done
+	make -C ./libft fclean
 	$(RM) $(NAME)
 
 re:	fclean all

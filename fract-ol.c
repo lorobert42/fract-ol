@@ -6,15 +6,14 @@
 /*   By: lorobert <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:39:58 by lorobert          #+#    #+#             */
-/*   Updated: 2022/10/26 14:54:48 by lorobert         ###   ########.fr       */
+/*   Updated: 2022/11/09 12:32:35 by lorobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <math.h>
-#include "mlx.h"
+#include "mlx/mlx.h"
 #include "libft/libft.h"
-#include "fract-ol.h"
+#include "fractol.h"
 
 int	quit(t_vars *vars)
 {
@@ -22,10 +21,10 @@ int	quit(t_vars *vars)
 	exit(0);
 }
 
-int key_hook(int keycode, t_vars *vars)
+int	key_hook(int keycode, t_vars *vars)
 {
 	ft_printf("Hello: %d\n", keycode);
-	if (keycode == 65307)
+	if (keycode == 53)
 	{
 		mlx_destroy_window(vars->mlx_ptr, vars->win_ptr);
 		exit(0);
@@ -33,102 +32,52 @@ int key_hook(int keycode, t_vars *vars)
 	return (0);
 }
 
-int mandelbrot(float x, float y)
+int	scroll_hook(int keycode, t_vars *vars)
 {
-	float x0;
-	float y0;
-	int i;
-	float tmp;
-
-	x0 = x / 800 * 5 - 3;
-	y0 = y / 600 * 4 - 2;
-	x = 0;
-	y = 0;
-	i = 0;
-	while ((x * x) + (y * y) <= 4 && i < 1000)
-	{
-		tmp = x * x - y * y + x0;
-		y = 2 * x * y + y0;
-		x = tmp;
-		i++;
-	}
-	return (i);
+	(void)vars;
+	if (keycode == 4)
+		ft_printf("Scroll up\n");
+	else if (keycode == 5)
+		ft_printf("Scroll down\n");
+	return (0);
 }
 
-int julia(float x, float y)
+void	hook(t_vars *vars)
 {
-	float zx;
-	float zy;
-	int i;
-	float tmp;
-
-	zx = x / 800 * 4 - 2;
-	zy = y / 600 * 4 - 2;
-	i = 0;
-	while (zx * zx + zy * zy < 4 && i < 1000)
-	{
-		tmp = zx * zx - zy * zy;
-		zy = 2 * zx * zy + 0.11301;
-		zx = tmp + -0.74543;
-		i++;
-	}
-	return (i);
+	mlx_key_hook(vars->win_ptr, key_hook, vars);
+	mlx_hook(vars->win_ptr, 17, 0, quit, vars);
+	mlx_mouse_hook(vars->win_ptr, scroll_hook, vars);
 }
 
-int	main()
+int	main(void)
 {
 	t_vars	vars;
-	void	*img_ptr;
-	int		pixel_bits;
-	int		line_bytes;
-	int		endian;
-	char	*buffer;
-	int 	color;
-	int 	x;
-	int 	y;
-	int 	pixel;
+	t_point	p;
+	int		color;
+	int		pixel;
 
 	vars.mlx_ptr = mlx_init();
 	vars.win_ptr = mlx_new_window(vars.mlx_ptr, 800, 600, "Fract-ol");
-
-	img_ptr = mlx_new_image(vars.mlx_ptr, 800, 600);
-	buffer = mlx_get_data_addr(img_ptr, &pixel_bits, &line_bytes, &endian);
-
-	y = 0;
-	while (y < 600)
+	vars.img_ptr->addr = mlx_new_image(vars.mlx_ptr, 800, 600);
+	vars.img_ptr->buffer = mlx_get_data_addr(vars.img_ptr->addr, \
+			&vars.img_ptr->pixel_bits, &vars.img_ptr->line_bytes, \
+			&vars.img_ptr->endian);
+	p.y = 0;
+	while (p.y < 600)
 	{
-		x = 0;
-		while (x < 800)
+		p.x = 0;
+		while (p.x < 800)
 		{
-			color = julia((float)x, (float)y);
-			if (color == 255)
-				color = 0x000000;
-			else
-				color = pow(color, 5);
-			if (pixel_bits != 32)
-				color = mlx_get_color_value(vars.mlx_ptr, color);
-			pixel = (y * line_bytes) + (x * 4);
-			if (endian)
-			{
-				buffer[pixel + 0] = (color >> 24);
-				buffer[pixel + 1] = (color >> 16) & 0xFF;
-				buffer[pixel + 2] = (color >> 8) & 0xFF;
-				buffer[pixel + 3] = (color) & 0xFF;
-			}
-			else
-			{
-				buffer[pixel + 0] = (color) & 0xFF;
-				buffer[pixel + 1] = (color >> 8) & 0xFF;
-				buffer[pixel + 2] = (color >> 16) & 0xFF;
-				buffer[pixel + 3] = (color >> 24);
-			}
-			x++;
+			color = mandelbrot(p);
+			color = get_color(color, vars);
+			pixel = ((int)p.y * vars.img_ptr->line_bytes) + ((int)p.x * 4);
+			set_color(color, pixel, vars.img_ptr);
+			p.x++;
 		}
-		y++;
+		p.y++;
 	}
-	mlx_put_image_to_window(vars.mlx_ptr, vars.win_ptr, img_ptr, 0, 0);
-
-	mlx_key_hook(vars.win_ptr, key_hook, &vars);
-	mlx_hook(vars.win_ptr, 17, 0, quit, &vars);
+	mlx_put_image_to_window(vars.mlx_ptr, vars.win_ptr, \
+			vars.img_ptr->addr, 0, 0);
+	hook(&vars);
 	mlx_loop(vars.mlx_ptr);
 }
