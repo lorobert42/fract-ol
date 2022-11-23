@@ -31,13 +31,19 @@ LDLIBS	:=	$(addprefix -l, $(LIBS))
 
 RM		:=	rm -f
 
+UNAME	:=	$(shell uname)
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
+ifeq ($(UNAME),Linux)
+	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME) -lXext -lX11 -lm
+else
 	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME) -framework OpenGL -framework Appkit -lm
+endif
 
 $(LIBS_TARGET):
 	make -C $(@D)
