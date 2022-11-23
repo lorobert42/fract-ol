@@ -29,7 +29,9 @@ typedef struct s_img {
 typedef struct s_vars {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	t_img	*img_ptr;
+	t_img	*img;
+	t_img	*prev;
+	t_img	*next;
 }	t_vars;
 
 // Fractal types

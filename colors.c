@@ -20,7 +20,7 @@ int	get_color(int color, t_vars vars)
 		color = 0x000000;
 	else
 		color = (int)pow(color, 5);
-	if (vars.img_ptr->pixel_bits != 32)
+	if (vars.img->pixel_bits != 32)
 		color = (int)mlx_get_color_value(vars.mlx_ptr, color);
 	return (color);
 }

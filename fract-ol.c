@@ -17,18 +17,16 @@
 
 int	quit(t_vars *vars)
 {
+	mlx_destroy_image(vars->mlx_ptr, vars->img->addr);
 	mlx_destroy_window(vars->mlx_ptr, vars->win_ptr);
+	free(vars->img);
 	exit(0);
 }
 
 int	key_hook(int keycode, t_vars *vars)
 {
-	ft_printf("Hello: %d\n", keycode);
-	if (keycode == 53)
-	{
-		mlx_destroy_window(vars->mlx_ptr, vars->win_ptr);
-		exit(0);
-	}
+	if (keycode == 53 || keycode == 65307)
+		quit(vars);
 	return (0);
 }
 
@@ -58,10 +56,11 @@ int	main(void)
 
 	vars.mlx_ptr = mlx_init();
 	vars.win_ptr = mlx_new_window(vars.mlx_ptr, 800, 600, "Fract-ol");
-	vars.img_ptr->addr = mlx_new_image(vars.mlx_ptr, 800, 600);
-	vars.img_ptr->buffer = mlx_get_data_addr(vars.img_ptr->addr, \
-			&vars.img_ptr->pixel_bits, &vars.img_ptr->line_bytes, \
-			&vars.img_ptr->endian);
+	vars.img = malloc(sizeof(t_img));
+	vars.img->addr = mlx_new_image(vars.mlx_ptr, 800, 600);
+	vars.img->buffer = mlx_get_data_addr(vars.img->addr, \
+			&vars.img->pixel_bits, &vars.img->line_bytes, \
+			&vars.img->endian);
 	p.y = 0;
 	while (p.y < 600)
 	{
@@ -70,14 +69,14 @@ int	main(void)
 		{
 			color = mandelbrot(p);
 			color = get_color(color, vars);
-			pixel = ((int)p.y * vars.img_ptr->line_bytes) + ((int)p.x * 4);
-			set_color(color, pixel, vars.img_ptr);
+			pixel = ((int)p.y * vars.img->line_bytes) + ((int)p.x * 4);
+			set_color(color, pixel, vars.img);
 			p.x++;
 		}
 		p.y++;
 	}
 	mlx_put_image_to_window(vars.mlx_ptr, vars.win_ptr, \
-			vars.img_ptr->addr, 0, 0);
+			vars.img->addr, 0, 0);
 	hook(&vars);
 	mlx_loop(vars.mlx_ptr);
 }
