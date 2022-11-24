@@ -13,6 +13,10 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
+# define MAX_ITERATIONS 1000
+# define WIDTH 800
+# define HEIGHT 600
+
 typedef struct s_point {
 	float	x;
 	float	y;
@@ -34,12 +38,20 @@ typedef struct s_vars {
 	t_img	*next;
 }	t_vars;
 
+typedef struct s_color {
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+	unsigned char	t;
+}	t_color;
+
+
 // Fractal types
 int		mandelbrot(t_point p);
 int		julia(t_point p);
 
 // Colors
-int		get_color(int color, t_vars vars);
-void	set_color(int color, int pixel, t_img *img);
+t_color	get_color(int color);
+void	set_color(t_color color, int pixel, t_img *img, t_vars vars);
 
 #endif

@@ -19,12 +19,12 @@ int	mandelbrot(t_point p)
 	int		i;
 	float	tmp;
 
-	x0 = p.x / 800 * 5 - 3;
-	y0 = p.y / 600 * 4 - 2;
+	x0 = p.x / WIDTH * 5 - 3;
+	y0 = p.y / HEIGHT * 4 - 2;
 	p.x = 0;
 	p.y = 0;
 	i = 0;
-	while (p.x * p.x + p.y * p.y <= 4 && i < 1000)
+	while (p.x * p.x + p.y * p.y <= 4 && i < MAX_ITERATIONS)
 	{
 		tmp = p.x * p.x - p.y * p.y + x0;
 		p.y = 2 * p.x * p.y + y0;

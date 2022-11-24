@@ -19,8 +19,8 @@ int	julia(t_point p)
 	int		i;
 	float	tmp;
 
-	x0 = p.x / 800 * 4 - 2;
-	y0 = p.y / 600 * 4 - 2;
+	x0 = p.x / WIDTH * 4 - 2;
+	y0 = p.y / HEIGHT * 4 - 2;
 	i = 0;
 	while (x0 * x0 + y0 * y0 < 4 && i < 1000)
 	{

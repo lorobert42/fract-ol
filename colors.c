@@ -14,19 +14,36 @@
 #include "mlx/mlx.h"
 #include "fractol.h"
 
-int	get_color(int color, t_vars vars)
+t_color	get_color(int index)
 {
-	if (color == 255)
-		color = 0x000000;
+	t_color	color;
+	double	t;
+
+	t = (double)index / (double)MAX_ITERATIONS;
+	if (index == 1000)
+	{
+		color.r = (unsigned char)0;
+		color.g = (unsigned char)0;
+		color.b = (unsigned char)0;
+		color.t = (unsigned char)0;
+	}
 	else
-		color = (int)pow(color, 5);
-	if (vars.img->pixel_bits != 32)
-		color = (int)mlx_get_color_value(vars.mlx_ptr, color);
+	{
+		color.r = (unsigned char)(9 * (1 - t) * pow(t, 3) * 255);
+		color.g = (unsigned char)(15 * pow((1 - t), 2) * pow(t, 2) * 255);
+		color.b = (unsigned char)(8.5 * pow((1 - t), 3) * t * 255);
+		color.t = (unsigned char)0;
+	}
 	return (color);
 }
 
-void	set_color(int color, int pixel, t_img *img)
+void	set_color(t_color c, int pixel, t_img *img, t_vars vars)
 {
+	int	color;
+
+	color = (c.t << 24 | c.r << 16 | c.g << 8 | c.b);
+	if (vars.img->pixel_bits != 32)
+		color = mlx_get_color_value(vars.mlx_ptr, color);
 	if (img->endian)
 	{
 		img->buffer[pixel + 0] = (char)(color >> 24);

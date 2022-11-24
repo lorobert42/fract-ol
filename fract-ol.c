@@ -51,26 +51,25 @@ int	main(void)
 {
 	t_vars	vars;
 	t_point	p;
-	int		color;
+	t_color	color;
 	int		pixel;
 
 	vars.mlx_ptr = mlx_init();
-	vars.win_ptr = mlx_new_window(vars.mlx_ptr, 800, 600, "Fract-ol");
+	vars.win_ptr = mlx_new_window(vars.mlx_ptr, WIDTH, HEIGHT, "Fract-ol");
 	vars.img = malloc(sizeof(t_img));
-	vars.img->addr = mlx_new_image(vars.mlx_ptr, 800, 600);
+	vars.img->addr = mlx_new_image(vars.mlx_ptr, WIDTH, HEIGHT);
 	vars.img->buffer = mlx_get_data_addr(vars.img->addr, \
 			&vars.img->pixel_bits, &vars.img->line_bytes, \
 			&vars.img->endian);
 	p.y = 0;
-	while (p.y < 600)
+	while (p.y < HEIGHT)
 	{
 		p.x = 0;
-		while (p.x < 800)
+		while (p.x < WIDTH)
 		{
-			color = mandelbrot(p);
-			color = get_color(color, vars);
+			color = get_color(mandelbrot(p));
 			pixel = ((int)p.y * vars.img->line_bytes) + ((int)p.x * 4);
-			set_color(color, pixel, vars.img);
+			set_color(color, pixel, vars.img, vars);
 			p.x++;
 		}
 		p.y++;
