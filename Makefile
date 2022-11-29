@@ -13,6 +13,7 @@
 NAME	:=	fractol
 
 SRCS	:=	fract-ol.c \
+			compute.c \
 			mandelbrot.c \
 			julia.c \
 			colors.c

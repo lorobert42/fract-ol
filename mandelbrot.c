@@ -12,15 +12,15 @@
 
 #include "fractol.h"
 
-int	mandelbrot(t_point p)
+int	mandelbrot(t_point p, t_vars *vars)
 {
 	float	x0;
 	float	y0;
 	int		i;
 	float	tmp;
 
-	x0 = p.x / WIDTH * 5 - 3;
-	y0 = p.y / HEIGHT * 4 - 2;
+	x0 = p.x / WIDTH * vars->frac->width - (vars->frac->width / 2);
+	y0 = p.y / HEIGHT * vars->frac->height - (vars->frac->height / 2);
 	p.x = 0;
 	p.y = 0;
 	i = 0;
