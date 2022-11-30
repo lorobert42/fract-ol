@@ -32,27 +32,22 @@ int	key_hook(int keycode, t_vars *vars)
 
 int	scroll_hook(int keycode, int x, int y, t_vars *vars)
 {
-	(void)x;
-	(void)y;
-	if (keycode == 4)
+	float	mousex;
+	float	mousey;
+	float	zoom;
+
+	if (keycode == 4 || keycode == 5)
 	{
-		vars->frac->start.x *= x / WIDTH;
-		vars->frac->start.y *= y / HEIGHT;
-		vars->frac->width /= 1.1;
-		vars->frac->height = (vars->frac->width * HEIGHT) / WIDTH;
-		vars->frac->xmin = -vars->frac->width / 2 + (vars->frac->start.x - 1);
-		vars->frac->ymin = -vars->frac->height / 2 + (vars->frac->start.y - 1);
-		vars->frac->xmax = vars->frac->xmin + vars->frac->width;
-		vars->frac->ymax = vars->frac->ymin + vars->frac->height;
-	}
-	else if (keycode == 5)
-	{
-		vars->frac->width *= 1.1;
-		vars->frac->height = (vars->frac->width * HEIGHT) / WIDTH;
-		vars->frac->xmin = -vars->frac->width / 2;
-		vars->frac->ymin = -vars->frac->height / 2;
-		vars->frac->xmax = vars->frac->xmin + vars->frac->width;
-		vars->frac->ymax = vars->frac->ymin + vars->frac->height;
+		mousex = (float)x / (WIDTH / (vars->frac->xmax - vars->frac->xmin)) + vars->frac->xmin;
+		mousey = (float)y / (HEIGHT / (vars->frac->ymax - vars->frac->ymin)) * -vars->frac->ymax;
+		if (keycode == 4)
+			zoom = 0.8;
+		else
+			zoom = 1.2;
+		vars->frac->xmin = mousex + ((vars->frac->xmin - mousex) * (1.0 / zoom));
+		vars->frac->ymin = mousey + ((vars->frac->ymin - mousey) * (1.0 / zoom));
+		vars->frac->xmax = mousex + ((vars->frac->xmax - mousex) * (1.0 / zoom));
+		vars->frac->ymax = mousey + ((vars->frac->ymax - mousey) * (1.0 / zoom));
 	}
 	compute_fractal(vars);
 	mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, \
@@ -74,14 +69,12 @@ t_fractal	*init_fractal(void)
 	frac = malloc(sizeof(t_fractal));
 	if (!frac)
 		return (NULL);
-	frac->width = 4;
-	frac->height = (frac->width * HEIGHT) / WIDTH;
-	frac->xmin = -frac->width / 2;
-	frac->ymin = -frac->height / 2;
-	frac->xmax = frac->xmin + frac->width;
-	frac->ymax = frac->ymin + frac->height;
-	frac->start.x = 1;
-	frac->start.y = 1;
+	frac->xmin = -2.0;
+	frac->xmax = 2.0;
+	frac->ymin = -2.0;
+	frac->ymax = frac->ymin + (frac->xmax - frac->xmin) * HEIGHT / WIDTH;
+	frac->xfactor = (frac->xmax - frac->xmin) / (WIDTH - 1);
+	frac->yfactor = (frac->ymax - frac->ymin) / (HEIGHT - 1);
 	return (frac);
 }
 

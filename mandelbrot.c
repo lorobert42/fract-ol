@@ -12,23 +12,19 @@
 
 #include "fractol.h"
 
-int	mandelbrot(t_point p, t_vars *vars)
+int	mandelbrot(t_point p)
 {
-	float	x0;
-	float	y0;
+	float	zx;
+	float	zy;
 	int		i;
-	float	tmp;
 
-	x0 = p.x / WIDTH * vars->frac->width - (vars->frac->width / 2);
-	y0 = p.y / HEIGHT * vars->frac->height - (vars->frac->height / 2);
-	p.x = 0;
-	p.y = 0;
+	zx = p.x;
+	zy = p.y;
 	i = 0;
-	while (p.x * p.x + p.y * p.y <= 4 && i < MAX_ITERATIONS)
+	while (zx * zx + zy * zy <= 4 && i < MAX_ITERATIONS)
 	{
-		tmp = p.x * p.x - p.y * p.y + x0;
-		p.y = 2 * p.x * p.y + y0;
-		p.x = tmp;
+		zx = zx * zx - zy * zy + p.x;
+		zy = 2.0 * zx * zy + p.y;
 		i++;
 	}
 	return (i);

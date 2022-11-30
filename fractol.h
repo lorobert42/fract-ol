@@ -23,14 +23,12 @@ typedef struct s_point {
 }	t_point;
 
 typedef struct s_fractal {
-	float	width;
-	float	height;
 	float	xmax;
 	float	ymax;
 	float	xmin;
 	float	ymin;
-	float	zoom;
-	t_point	start;
+	float	xfactor;
+	float	yfactor;
 }	t_fractal;
 
 typedef struct s_img {
@@ -60,7 +58,7 @@ typedef struct s_color {
 void	compute_fractal(t_vars *vars);
 
 // Fractal types
-int		mandelbrot(t_point p, t_vars *vars);
+int		mandelbrot(t_point p);
 int		julia(t_point p);
 
 // Colors
