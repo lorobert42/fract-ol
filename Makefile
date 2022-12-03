@@ -16,7 +16,9 @@ SRCS	:=	fract-ol.c \
 			compute.c \
 			mandelbrot.c \
 			julia.c \
-			colors.c
+			colors.c \
+			hooks.c \
+			ft_atof.c
 OBJS	:=	$(SRCS:.c=.o)
 
 LIBS	:=	ft mlx

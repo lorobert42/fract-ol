@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <math.h>
 #include "mlx/mlx.h"
 #include "libft/libft.h"
 #include "fractol.h"
@@ -23,65 +24,61 @@ int	quit(t_vars *vars)
 	exit(0);
 }
 
-int	key_hook(int keycode, t_vars *vars)
+void	move_fractal(int keycode, t_vars *vars)
 {
-	if (keycode == 53 || keycode == 65307)
-		quit(vars);
-	return (0);
-}
-
-int	scroll_hook(int keycode, int x, int y, t_vars *vars)
-{
-	float	mousex;
-	float	mousey;
-	float	zoom;
-
-	if (keycode == 4 || keycode == 5)
+	if (keycode == 65361)
 	{
-		mousex = (float)x / (WIDTH / (vars->frac->xmax - vars->frac->xmin)) + vars->frac->xmin;
-		mousey = (float)y / (HEIGHT / (vars->frac->ymax - vars->frac->ymin)) * -vars->frac->ymax;
-		if (keycode == 4)
-			zoom = 0.8;
-		else
-			zoom = 1.2;
-		vars->frac->xmin = mousex + ((vars->frac->xmin - mousex) * (1.0 / zoom));
-		vars->frac->ymin = mousey + ((vars->frac->ymin - mousey) * (1.0 / zoom));
-		vars->frac->xmax = mousex + ((vars->frac->xmax - mousex) * (1.0 / zoom));
-		vars->frac->ymax = mousey + ((vars->frac->ymax - mousey) * (1.0 / zoom));
+		vars->min.x -= fabs(vars->min.x) * vars->factor.x * 10;
+		vars->max.x -= fabs(vars->min.x) * vars->factor.x * 10;
 	}
-	compute_fractal(vars);
+	else if (keycode == 65363)
+	{
+		vars->min.x += fabs(vars->min.x) * vars->factor.x * 10;
+		vars->max.x += fabs(vars->min.x) * vars->factor.x * 10;
+	}
+	else if (keycode == 65362)
+	{
+		vars->min.y += fabs(vars->min.y) * vars->factor.y * 10;
+		vars->max.y += fabs(vars->min.y) * vars->factor.y * 10;
+	}
+	else if (keycode == 65364)
+	{
+		vars->min.y -= fabs(vars->min.y) * vars->factor.y * 10;
+		vars->max.y -= fabs(vars->min.y) * vars->factor.y * 10;
+	}
+	vars->type(vars);
 	mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, \
 		vars->img->addr, 0, 0);
-	return (0);
 }
 
-void	hook(t_vars *vars)
+void	print_help(void)
 {
-	mlx_key_hook(vars->win_ptr, key_hook, vars);
-	mlx_hook(vars->win_ptr, 17, 0, quit, vars);
-	mlx_mouse_hook(vars->win_ptr, scroll_hook, vars);
+	ft_printf("Usage: ./fractol [type] [parameters]");
+	exit(0);
 }
 
-t_fractal	*init_fractal(void)
+void	parse_args(int argc, char **argv, t_vars *vars)
 {
-	t_fractal	*frac;
-
-	frac = malloc(sizeof(t_fractal));
-	if (!frac)
-		return (NULL);
-	frac->xmin = -2.0;
-	frac->xmax = 2.0;
-	frac->ymin = -2.0;
-	frac->ymax = frac->ymin + (frac->xmax - frac->xmin) * HEIGHT / WIDTH;
-	frac->xfactor = (frac->xmax - frac->xmin) / (WIDTH - 1);
-	frac->yfactor = (frac->ymax - frac->ymin) / (HEIGHT - 1);
-	return (frac);
+	if (!ft_strncmp(argv[1], "mandelbrot", 10))
+		init_mandelbrot(vars);
+	else if (!ft_strncmp(argv[1], "julia", 5))
+	{
+		if (argc != 4)
+			init_julia(0.3, 0.5, vars);
+		else
+			init_julia(ft_atof(argv[2]), ft_atof(argv[3]), vars);
+	}
+	else
+		print_help();
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_vars		vars;
 
+	if (argc == 1)
+		print_help();
+	parse_args(argc, argv, &vars);
 	vars.mlx_ptr = mlx_init();
 	vars.win_ptr = mlx_new_window(vars.mlx_ptr, WIDTH, HEIGHT, "Fract-ol");
 	vars.img = malloc(sizeof(t_img));
@@ -89,8 +86,7 @@ int	main(void)
 	vars.img->buffer = mlx_get_data_addr(vars.img->addr, \
 			&vars.img->pixel_bits, &vars.img->line_bytes, \
 			&vars.img->endian);
-	vars.frac = init_fractal();
-	compute_fractal(&vars);
+	vars.type(&vars);
 	mlx_put_image_to_window(vars.mlx_ptr, vars.win_ptr, \
 			vars.img->addr, 0, 0);
 	hook(&vars);

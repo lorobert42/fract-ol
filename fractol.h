@@ -18,18 +18,9 @@
 # define HEIGHT 600
 
 typedef struct s_point {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 }	t_point;
-
-typedef struct s_fractal {
-	float	xmax;
-	float	ymax;
-	float	xmin;
-	float	ymin;
-	float	xfactor;
-	float	yfactor;
-}	t_fractal;
 
 typedef struct s_img {
 	void	*addr;
@@ -40,12 +31,16 @@ typedef struct s_img {
 }	t_img;
 
 typedef struct s_vars {
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_img		*img;
-	t_img		*prev;
-	t_img		*next;
-	t_fractal	*frac;
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_img	*img;
+	t_img	*prev;
+	t_img	*next;
+	void	(*type)(struct s_vars *vars);
+	t_point	max;
+	t_point	min;
+	t_point	factor;
+	t_point	offset;
 }	t_vars;
 
 typedef struct s_color {
@@ -58,11 +53,25 @@ typedef struct s_color {
 void	compute_fractal(t_vars *vars);
 
 // Fractal types
+void	init_mandelbrot(t_vars *vars);
+void	compute_mandelbrot(t_vars *vars);
 int		mandelbrot(t_point p);
-int		julia(t_point p);
+void	init_julia(double x, double y, t_vars *vars);
+void	compute_julia(t_vars *vars);
+int		julia(t_point p, t_vars *vars);
 
 // Colors
 t_color	get_color(int color);
 void	set_color(t_color color, int pixel, t_vars *vars);
+
+// Hooks
+void	hook(t_vars *vars);
+int		key_hook(int keycode, t_vars *vars);
+int		scroll_hook(int keycode, int x, int y, t_vars *vars);
+int		quit(t_vars *vars);
+void	move_fractal(int keycode, t_vars *vars);
+
+// Math
+double	ft_atof(char *nbr);
 
 #endif

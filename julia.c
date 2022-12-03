@@ -10,23 +10,64 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "fractol.h"
 
-int	julia(t_point p)
+void	init_julia(double x, double y, t_vars *vars)
 {
-	float	x0;
-	float	y0;
-	int		i;
-	float	tmp;
+	double		ratio;
 
-	x0 = p.x / WIDTH * 4 - 2;
-	y0 = p.y / HEIGHT * 4 - 2;
-	i = 0;
-	while (x0 * x0 + y0 * y0 < 4 && i < 1000)
+	vars->type = compute_julia;
+	ratio = (double)HEIGHT / (double)WIDTH;
+	vars->min.x = -2.0;
+	vars->max.x = 2.0;
+	vars->min.y = -2.0 * ratio;
+	vars->max.y = 2.0 * ratio;
+	vars->factor.x = (vars->max.x - vars->min.x) / (WIDTH - 1);
+	vars->factor.y = (vars->max.y - vars->min.y) / (HEIGHT - 1);
+	vars->offset.x = x;
+	vars->offset.y = y;
+}
+
+void	compute_julia(t_vars *vars)
+{
+	int		pixel;
+	int		x;
+	int		y;
+	t_point	p;
+	t_color	color;
+
+	y = 0;
+	while (y < HEIGHT)
 	{
-		tmp = x0 * x0 - y0 * y0;
-		y0 = (float)(2 * x0 * y0 + 0.11301);
-		x0 = (float)(tmp + -0.74543);
+		p.y = vars->max.y - y * vars->factor.y;
+		x = 0;
+		while (x < WIDTH)
+		{
+			p.x = vars->min.x + x * vars->factor.x;
+			color = get_color(julia(p, vars));
+			pixel = (y * vars->img->line_bytes) + (x * 4);
+			set_color(color, pixel, vars);
+			x++;
+		}
+		y++;
+	}
+}
+
+int	julia(t_point p, t_vars *vars)
+{
+	t_point	z;
+	double	tmp;
+	int		i;
+
+	z.x = p.x;
+	z.y = p.y;
+	i = 0;
+	while (z.x * z.x + z.y * z.y <= 4 && i < MAX_ITERATIONS)
+	{
+		tmp = z.x * z.x - z.y * z.y + vars->offset.x;
+		z.y = 2.0 * z.x * z.y + vars->offset.y;
+		z.x = tmp;
 		i++;
 	}
 	return (i);

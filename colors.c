@@ -17,6 +17,7 @@
 t_color	get_color(int index)
 {
 	t_color	color;
+	double	i;
 
 	if (index == MAX_ITERATIONS)
 	{
@@ -27,9 +28,10 @@ t_color	get_color(int index)
 	}
 	else
 	{
-		color.r = (unsigned char)(sin(index + 4) * 127.5 + 127.5);
-		color.g = (unsigned char)(sin(index + 2) * 127.5 + 127.5);
-		color.b = (unsigned char)(sin(index) * 127.5 + 127.5);
+		i = (double)index / (double)MAX_ITERATIONS;
+		color.r = (unsigned char)(sin(4 * i) * 127.5 + 127.5);
+		color.g = (unsigned char)(sin(4 * i + 2) * 127.5 + 127.5);
+		color.b = (unsigned char)(sin(4 * i + 4.3) * 127.5 + 127.5);
 		color.t = (unsigned char)0;
 	}
 	return (color);
