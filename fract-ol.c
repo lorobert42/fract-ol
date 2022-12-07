@@ -68,6 +68,15 @@ void	parse_args(int argc, char **argv, t_vars *vars)
 		else
 			init_julia(ft_atof(argv[2]), ft_atof(argv[3]), vars);
 	}
+	else if (!ft_strncmp(argv[1], "burning_ship", 10))
+		init_burning_ship(vars);
+	else if (!ft_strncmp(argv[1], "cos", 10))
+	{
+		if (argc != 4)
+			init_cos(0.3, 0.5, vars);
+		else
+			init_cos(ft_atof(argv[2]), ft_atof(argv[3]), vars);
+	}
 	else
 		print_help();
 }

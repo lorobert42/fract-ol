@@ -59,6 +59,12 @@ int		mandelbrot(t_point p);
 void	init_julia(double x, double y, t_vars *vars);
 void	compute_julia(t_vars *vars);
 int		julia(t_point p, t_vars *vars);
+void	init_burning_ship(t_vars *vars);
+void	compute_burning_ship(t_vars *vars);
+int		burning_ship(t_point p);
+void	init_cos(double x, double y, t_vars *vars);
+void	compute_cos(t_vars *vars);
+int		cos_fractal(t_point p);
 
 // Colors
 t_color	get_color(int color);

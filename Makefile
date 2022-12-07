@@ -16,6 +16,8 @@ SRCS	:=	fract-ol.c \
 			compute.c \
 			mandelbrot.c \
 			julia.c \
+			burning_ship.c \
+			cos_fractal.c \
 			colors.c \
 			hooks.c \
 			ft_atof.c
