@@ -46,7 +46,7 @@ void	move_fractal(int keycode, t_vars *vars)
 		vars->min.y -= fabs(vars->min.y) * vars->factor.y * 10;
 		vars->max.y -= fabs(vars->min.y) * vars->factor.y * 10;
 	}
-	vars->type(vars);
+	compute_fractal(vars);
 	mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, \
 		vars->img->addr, 0, 0);
 }
@@ -70,13 +70,8 @@ void	parse_args(int argc, char **argv, t_vars *vars)
 	}
 	else if (!ft_strncmp(argv[1], "burning_ship", 10))
 		init_burning_ship(vars);
-	else if (!ft_strncmp(argv[1], "cos", 10))
-	{
-		if (argc != 4)
-			init_cos(0.3, 0.5, vars);
-		else
-			init_cos(ft_atof(argv[2]), ft_atof(argv[3]), vars);
-	}
+	else if (!ft_strncmp(argv[1], "cos", 3))
+		init_cos(vars);
 	else
 		print_help();
 }
@@ -95,7 +90,7 @@ int	main(int argc, char **argv)
 	vars.img->buffer = mlx_get_data_addr(vars.img->addr, \
 			&vars.img->pixel_bits, &vars.img->line_bytes, \
 			&vars.img->endian);
-	vars.type(&vars);
+	compute_fractal(&vars);
 	mlx_put_image_to_window(vars.mlx_ptr, vars.win_ptr, \
 			vars.img->addr, 0, 0);
 	hook(&vars);

@@ -6,7 +6,7 @@
 /*   By: lorobert <lorobert@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 10:01:33 by lorobert          #+#    #+#             */
-/*   Updated: 2022/12/03 11:08:23 by lorobert         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:07:58 by lorobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	compute_fractal(t_vars *vars)
 		while (x < WIDTH)
 		{
 			p.x = vars->min.x + x * vars->factor.x;
-			color = get_color(julia(p, vars));
+			color = get_color(vars->type(p, vars));
 			pixel = (y * vars->img->line_bytes) + (x * 4);
 			set_color(color, pixel, vars);
 			x++;

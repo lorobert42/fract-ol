@@ -36,7 +36,7 @@ typedef struct s_vars {
 	t_img	*img;
 	t_img	*prev;
 	t_img	*next;
-	void	(*type)(struct s_vars *vars);
+	int		(*type)(t_point p, struct s_vars *vars);
 	t_point	max;
 	t_point	min;
 	t_point	factor;
@@ -54,17 +54,13 @@ void	compute_fractal(t_vars *vars);
 
 // Fractal types
 void	init_mandelbrot(t_vars *vars);
-void	compute_mandelbrot(t_vars *vars);
-int		mandelbrot(t_point p);
+int		mandelbrot(t_point p, t_vars *vars);
 void	init_julia(double x, double y, t_vars *vars);
-void	compute_julia(t_vars *vars);
 int		julia(t_point p, t_vars *vars);
 void	init_burning_ship(t_vars *vars);
-void	compute_burning_ship(t_vars *vars);
-int		burning_ship(t_point p);
-void	init_cos(double x, double y, t_vars *vars);
-void	compute_cos(t_vars *vars);
-int		cos_fractal(t_point p);
+int		burning_ship(t_point p, t_vars *vars);
+void	init_cos(t_vars *vars);
+int		cos_fractal(t_point p, t_vars *vars);
 
 // Colors
 t_color	get_color(int color);

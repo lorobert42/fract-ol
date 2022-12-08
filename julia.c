@@ -17,7 +17,7 @@ void	init_julia(double x, double y, t_vars *vars)
 {
 	double		ratio;
 
-	vars->type = compute_julia;
+	vars->type = julia;
 	ratio = (double)HEIGHT / (double)WIDTH;
 	vars->min.x = -2.0;
 	vars->max.x = 2.0;
@@ -27,31 +27,6 @@ void	init_julia(double x, double y, t_vars *vars)
 	vars->factor.y = (vars->max.y - vars->min.y) / (HEIGHT - 1);
 	vars->offset.x = x;
 	vars->offset.y = y;
-}
-
-void	compute_julia(t_vars *vars)
-{
-	int		pixel;
-	int		x;
-	int		y;
-	t_point	p;
-	t_color	color;
-
-	y = 0;
-	while (y < HEIGHT)
-	{
-		p.y = vars->max.y - y * vars->factor.y;
-		x = 0;
-		while (x < WIDTH)
-		{
-			p.x = vars->min.x + x * vars->factor.x;
-			color = get_color(julia(p, vars));
-			pixel = (y * vars->img->line_bytes) + (x * 4);
-			set_color(color, pixel, vars);
-			x++;
-		}
-		y++;
-	}
 }
 
 int	julia(t_point p, t_vars *vars)

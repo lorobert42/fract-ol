@@ -6,7 +6,7 @@
 /*   By: lorobert <lorobert@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 11:45:59 by lorobert          #+#    #+#             */
-/*   Updated: 2022/12/03 11:47:53 by lorobert         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:19:38 by lorobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	scroll_hook(int keycode, int x, int y, t_vars *vars)
 		vars->max.y = mouse.y + ((vars->max.y - mouse.y) * (1.0 / zoom));
 		vars->factor.x = (vars->max.x - vars->min.x) / (WIDTH - 1);
 		vars->factor.y = (vars->max.y - vars->min.y) / (HEIGHT - 1);
-		vars->type(vars);
+		compute_fractal(vars);
 		mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, \
 			vars->img->addr, 0, 0);
 	}
