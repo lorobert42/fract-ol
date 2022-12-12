@@ -59,16 +59,16 @@ void	print_help(void)
 
 void	parse_args(int argc, char **argv, t_vars *vars)
 {
-	if (!ft_strncmp(argv[1], "mandelbrot", 10))
+	if (!ft_strncmp(argv[1], "mandelbrot", 10) || !ft_strncmp(argv[1], "m", 1))
 		init_mandelbrot(vars);
-	else if (!ft_strncmp(argv[1], "julia", 5))
+	else if (!ft_strncmp(argv[1], "julia", 5) || !ft_strncmp(argv[1], "j", 1))
 	{
 		if (argc != 4)
 			init_julia(0.3, 0.5, vars);
 		else
 			init_julia(ft_atof(argv[2]), ft_atof(argv[3]), vars);
 	}
-	else if (!ft_strncmp(argv[1], "burning_ship", 10))
+	else if (!ft_strncmp(argv[1], "ship", 4) || !ft_strncmp(argv[1], "s", 1))
 		init_burning_ship(vars);
 	else if (!ft_strncmp(argv[1], "cos", 3))
 		init_cos(vars);
