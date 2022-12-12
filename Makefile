@@ -29,7 +29,7 @@ LIBS_TARGET	:=	libft/libft.a mlx/libmlx.a
 INCS	:=	libft mlx
 
 CC		:=	gcc
-CFLAGS	:=	-Wall -Wextra -Werror -g
+CFLAGS	:=	-Wall -Wextra -Werror
 CPPFLAGS	:=	$(addprefix -I, $(INCS)) -MMD -MP
 LDFLAGS	:=	$(addprefix -L, $(dir $(LIBS_TARGET)))
 LDLIBS	:=	$(addprefix -l, $(LIBS))
@@ -55,10 +55,12 @@ $(LIBS_TARGET):
 
 clean:
 	make -C ./libft clean
+	$(RM) ./mlx/*.o
 	$(RM) $(OBJS)
 
 fclean: clean
 	make -C ./libft fclean
+	$(RM) ./mlx/libmlx.a
 	$(RM) $(NAME)
 
 re:	fclean all
