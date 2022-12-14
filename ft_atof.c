@@ -6,7 +6,7 @@
 /*   By: lorobert <lorobert@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 11:20:47 by lorobert          #+#    #+#             */
-/*   Updated: 2022/12/03 11:34:31 by lorobert         ###   ########.fr       */
+/*   Updated: 2022/12/14 09:46:53 by lorobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ static double	ft_atof_decimal(char *nbr)
 		i++;
 	i++;
 	res = 0;
-	factor = 10;
+	factor = 10.0;
 	while (ft_isdigit(nbr[i]))
 	{
 		res += ((double)nbr[i] - '0') / factor;
-		factor *= 10;
+		factor *= 10.0;
 		i++;
 	}
 	return (res);
@@ -61,10 +61,11 @@ double	ft_atof(char *nbr)
 	}
 	while (ft_isdigit(nbr[i]) && nbr[i] != '.')
 	{
-		res = (res * 10) + ((nbr[i] - '0') * sign);
+		res = (res * 10) + (nbr[i] - '0');
 		i++;
 	}
 	if (nbr[i] == '.')
 		res += ft_atof_decimal(nbr);
+	res *= sign;
 	return (res);
 }
