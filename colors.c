@@ -29,9 +29,9 @@ t_color	get_color(int index)
 	else
 	{
 		i = (double)index / (double)MAX_ITERATIONS;
-		color.r = (unsigned char)(sin(4 * i) * 127.5 + 127.5);
-		color.g = (unsigned char)(sin(4 * i + 2) * 127.5 + 127.5);
-		color.b = (unsigned char)(sin(4 * i + 4.3) * 127.5 + 127.5);
+		color.r = (unsigned char)(sin(20 * i) * 127.5 + 127.5);
+		color.g = (unsigned char)(sin(20 * i + 2) * 127.5 + 127.5);
+		color.b = (unsigned char)(sin(20 * i + 4.3) * 127.5 + 127.5);
 		color.t = (unsigned char)0;
 	}
 	return (color);

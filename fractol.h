@@ -13,7 +13,7 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# define MAX_ITERATIONS 100
+# define MAX_ITERATIONS 200
 # define WIDTH 800
 # define HEIGHT 600
 

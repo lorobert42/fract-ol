@@ -64,7 +64,7 @@ void	parse_args(int argc, char **argv, t_vars *vars)
 	else if (!ft_strncmp(argv[1], "julia", 5) || !ft_strncmp(argv[1], "j", 1))
 	{
 		if (argc != 4)
-			init_julia(0.3, 0.5, vars);
+			init_julia(0.285, 0.01, vars);
 		else
 			init_julia(ft_atof(argv[2]), ft_atof(argv[3]), vars);
 	}
