@@ -10,18 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include <pthread.h>
 #include "fractol.h"
 
-void	compute_fractal(t_vars *vars)
+void	*compute_fractal(void *thread)
 {
 	int		pixel;
 	int		x;
 	int		y;
 	t_point	p;
 	t_color	color;
+	t_vars	*vars;
 
-	y = 0;
-	while (y < HEIGHT)
+	vars = ((t_thread *)thread)->vars;
+	y = ((t_thread *)thread)->id * (HEIGHT / THREADS);
+	while (y < ((t_thread *)thread)->id * (HEIGHT / THREADS) + (HEIGHT / THREADS))
 	{
 		p.y = vars->max.y - y * vars->factor.y;
 		x = 0;
@@ -35,4 +39,5 @@ void	compute_fractal(t_vars *vars)
 		}
 		y++;
 	}
+	return (NULL);
 }

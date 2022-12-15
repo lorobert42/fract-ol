@@ -13,9 +13,12 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# define MAX_ITERATIONS 200
+# define MAX_ITERATIONS 500
 # define WIDTH 800
 # define HEIGHT 600
+# define THREADS 8
+
+# include <pthread.h>
 
 typedef struct s_point {
 	double	x;
@@ -43,6 +46,13 @@ typedef struct s_vars {
 	t_point	offset;
 }	t_vars;
 
+typedef struct s_thread {
+	t_vars		*vars;
+	int			id;
+	pthread_t	thread;
+}	t_thread;
+
+
 typedef struct s_color {
 	unsigned char	r;
 	unsigned char	g;
@@ -50,7 +60,7 @@ typedef struct s_color {
 	unsigned char	t;
 }	t_color;
 
-void	compute_fractal(t_vars *vars);
+void	*compute_fractal(void *vars);
 
 // Fractal types
 void	init_mandelbrot(t_vars *vars);
@@ -67,9 +77,9 @@ t_color	get_color(int color);
 void	set_color(t_color color, int pixel, t_vars *vars);
 
 // Hooks
-void	hook(t_vars *vars);
+void	hook(t_thread threads[THREADS]);
 int		key_hook(int keycode, t_vars *vars);
-int		scroll_hook(int keycode, int x, int y, t_vars *vars);
+int		scroll_hook(int keycode, int x, int y, t_thread threads[THREADS]);
 int		quit(t_vars *vars);
 void	move_fractal(int keycode, t_vars *vars);
 

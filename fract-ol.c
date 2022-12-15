@@ -12,6 +12,7 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <pthread.h>
 #include "mlx/mlx.h"
 #include "libft/libft.h"
 #include "fractol.h"
@@ -79,6 +80,8 @@ void	parse_args(int argc, char **argv, t_vars *vars)
 int	main(int argc, char **argv)
 {
 	t_vars		vars;
+	t_thread	threads[THREADS];
+	int			i;
 
 	if (argc == 1)
 		print_help();
@@ -90,9 +93,22 @@ int	main(int argc, char **argv)
 	vars.img->buffer = mlx_get_data_addr(vars.img->addr, \
 			&vars.img->pixel_bits, &vars.img->line_bytes, \
 			&vars.img->endian);
-	compute_fractal(&vars);
+	i = 0;
+	while (i < THREADS)
+	{
+		threads[i].id = i;
+		threads[i].vars = &vars;
+		pthread_create(&threads[i].thread, NULL, compute_fractal, (void *)&threads[i]);
+		i++;
+	}
+	i = 0;
+	while (i < THREADS)
+	{
+		pthread_join(threads[i].thread, NULL);
+		i++;
+	}
 	mlx_put_image_to_window(vars.mlx_ptr, vars.win_ptr, \
 			vars.img->addr, 0, 0);
-	hook(&vars);
+	hook(threads);
 	mlx_loop(vars.mlx_ptr);
 }

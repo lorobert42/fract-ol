@@ -23,11 +23,14 @@ int	key_hook(int keycode, t_vars *vars)
 	return (0);
 }
 
-int	scroll_hook(int keycode, int x, int y, t_vars *vars)
+int	scroll_hook(int keycode, int x, int y, t_thread threads[THREADS])
 {
 	t_point	mouse;
 	double	zoom;
+	t_vars	*vars;
+	int		i;
 
+	vars = threads[0].vars;
 	if (keycode == 4 || keycode == 5)
 	{
 		mouse.x = (double)x / (WIDTH / (vars->max.x - vars->min.x)) \
@@ -44,16 +47,29 @@ int	scroll_hook(int keycode, int x, int y, t_vars *vars)
 		vars->max.y = mouse.y + ((vars->max.y - mouse.y) * (1.0 / zoom));
 		vars->factor.x = (vars->max.x - vars->min.x) / (WIDTH - 1);
 		vars->factor.y = (vars->max.y - vars->min.y) / (HEIGHT - 1);
-		compute_fractal(vars);
+		i = 0;
+		while (i < THREADS)
+		{
+			threads[i].id = i;
+			threads[i].vars = vars;
+			pthread_create(&threads[i].thread, NULL, compute_fractal, (void *)&threads[i]);
+			i++;
+		}
+		i = 0;
+		while (i < THREADS)
+		{
+			pthread_join(threads[i].thread, NULL);
+			i++;
+		}
 		mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, \
 			vars->img->addr, 0, 0);
 	}
 	return (0);
 }
 
-void	hook(t_vars *vars)
+void	hook(t_thread threads[THREADS])
 {
-	mlx_key_hook(vars->win_ptr, key_hook, vars);
-	mlx_hook(vars->win_ptr, 17, 0, quit, vars);
-	mlx_mouse_hook(vars->win_ptr, scroll_hook, vars);
+	mlx_key_hook(threads[0].vars->win_ptr, key_hook, threads[0].vars);
+	mlx_hook(threads[0].vars->win_ptr, 17, 0, quit, threads[0].vars);
+	mlx_mouse_hook(threads[0].vars->win_ptr, scroll_hook, threads);
 }
