@@ -3,24 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lorobert <lorobert@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: lorobert <lorobert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 11:45:59 by lorobert          #+#    #+#             */
-/*   Updated: 2022/12/08 11:19:38 by lorobert         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:03:14 by lorobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx/mlx.h"
+#include "keys.h"
 #include "fractol.h"
 
 int	key_hook(int keycode, t_vars *vars)
 {
-	if (keycode == 53 || keycode == 65307)
+	if (keycode == K_ESC)
 		quit(vars);
-	if (keycode == 65361 || keycode == 65362 || keycode == 65363 \
-		|| keycode == 65364)
+	if (keycode == K_LEFT || keycode == K_DOWN || keycode == K_RIGHT \
+		|| keycode == K_UP)
 		move_fractal(keycode, vars);
-	if (keycode == 8)
+	if (keycode == K_L)
 	{
 		vars->color_set = (vars->color_set + 1) % 3;
 		compute_fractal(vars);

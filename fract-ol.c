@@ -12,6 +12,7 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include "keys.h"
 #include "mlx/mlx.h"
 #include "libft/libft.h"
 #include "fractol.h"
@@ -26,22 +27,22 @@ int	quit(t_vars *vars)
 
 void	move_fractal(int keycode, t_vars *vars)
 {
-	if (keycode == 65361)
+	if (keycode == K_LEFT)
 	{
 		vars->min.x -= fabs(vars->min.x) * vars->factor.x * 10;
 		vars->max.x -= fabs(vars->min.x) * vars->factor.x * 10;
 	}
-	else if (keycode == 65363)
+	else if (keycode == K_RIGHT)
 	{
 		vars->min.x += fabs(vars->min.x) * vars->factor.x * 10;
 		vars->max.x += fabs(vars->min.x) * vars->factor.x * 10;
 	}
-	else if (keycode == 65362)
+	else if (keycode == K_UP)
 	{
 		vars->min.y += fabs(vars->min.y) * vars->factor.y * 10;
 		vars->max.y += fabs(vars->min.y) * vars->factor.y * 10;
 	}
-	else if (keycode == 65364)
+	else if (keycode == K_DOWN)
 	{
 		vars->min.y -= fabs(vars->min.y) * vars->factor.y * 10;
 		vars->max.y -= fabs(vars->min.y) * vars->factor.y * 10;
