@@ -41,6 +41,7 @@ typedef struct s_vars {
 	t_point	min;
 	t_point	factor;
 	t_point	offset;
+	int		color_set;
 }	t_vars;
 
 typedef struct s_color {
@@ -63,7 +64,7 @@ void	init_cos(t_vars *vars);
 int		cos_fractal(t_point p, t_vars *vars);
 
 // Colors
-t_color	get_color(int color);
+t_color	get_color(int color, int set);
 void	set_color(t_color color, int pixel, t_vars *vars);
 
 // Hooks

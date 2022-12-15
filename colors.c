@@ -14,7 +14,7 @@
 #include "mlx/mlx.h"
 #include "fractol.h"
 
-t_color	get_color(int index)
+t_color	get_color(int index, int set)
 {
 	t_color	color;
 	double	i;
@@ -29,9 +29,9 @@ t_color	get_color(int index)
 	else
 	{
 		i = (double)index / (double)MAX_ITERATIONS;
-		color.r = (unsigned char)(sin(20 * i) * 127.5 + 127.5);
-		color.g = (unsigned char)(sin(20 * i + 2) * 127.5 + 127.5);
-		color.b = (unsigned char)(sin(20 * i + 4.3) * 127.5 + 127.5);
+		color.r = (unsigned char)(sin(20 * i + set) * 127.5 + 127.5);
+		color.g = (unsigned char)(sin(20 * i + 2 * set) * 127.5 + 127.5);
+		color.b = (unsigned char)(sin(20 * i + 4.3 * set) * 127.5 + 127.5);
 		color.t = (unsigned char)0;
 	}
 	return (color);

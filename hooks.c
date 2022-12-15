@@ -20,6 +20,13 @@ int	key_hook(int keycode, t_vars *vars)
 	if (keycode == 65361 || keycode == 65362 || keycode == 65363 \
 		|| keycode == 65364)
 		move_fractal(keycode, vars);
+	if (keycode == 8)
+	{
+		vars->color_set = (vars->color_set + 1) % 3;
+		compute_fractal(vars);
+		mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, \
+			vars->img->addr, 0, 0);
+	}
 	return (0);
 }
 

@@ -91,6 +91,7 @@ int	main(int argc, char **argv)
 	vars.img->buffer = mlx_get_data_addr(vars.img->addr, \
 			&vars.img->pixel_bits, &vars.img->line_bytes, \
 			&vars.img->endian);
+	vars.color_set = 1;
 	compute_fractal(&vars);
 	mlx_put_image_to_window(vars.mlx_ptr, vars.win_ptr, \
 			vars.img->addr, 0, 0);

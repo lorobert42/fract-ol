@@ -28,7 +28,7 @@ void	compute_fractal(t_vars *vars)
 		while (x < WIDTH)
 		{
 			p.x = vars->min.x + x * vars->factor.x;
-			color = get_color(vars->type(p, vars));
+			color = get_color(vars->type(p, vars), vars->color_set);
 			pixel = (y * vars->img->line_bytes) + (x * 4);
 			set_color(color, pixel, vars);
 			x++;
