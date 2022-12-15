@@ -54,23 +54,24 @@ void	move_fractal(int keycode, t_vars *vars)
 void	print_help(void)
 {
 	ft_printf("Usage: ./fractol [type] [parameters]");
+	ft_printf("Example: ./fractol mandelbrot");
 	exit(0);
 }
 
 void	parse_args(int argc, char **argv, t_vars *vars)
 {
-	if (!ft_strncmp(argv[1], "mandelbrot", 10) || !ft_strncmp(argv[1], "m", 1))
+	if (!ft_strncmp(argv[1], "mandelbrot", 11) || !ft_strncmp(argv[1], "m", 2))
 		init_mandelbrot(vars);
-	else if (!ft_strncmp(argv[1], "julia", 5) || !ft_strncmp(argv[1], "j", 1))
+	else if (!ft_strncmp(argv[1], "julia", 6) || !ft_strncmp(argv[1], "j", 2))
 	{
 		if (argc != 4)
 			init_julia(0.285, 0.01, vars);
 		else
 			init_julia(ft_atof(argv[2]), ft_atof(argv[3]), vars);
 	}
-	else if (!ft_strncmp(argv[1], "ship", 4) || !ft_strncmp(argv[1], "s", 1))
+	else if (!ft_strncmp(argv[1], "ship", 5) || !ft_strncmp(argv[1], "s", 2))
 		init_burning_ship(vars);
-	else if (!ft_strncmp(argv[1], "cos", 3))
+	else if (!ft_strncmp(argv[1], "cos", 4))
 		init_cos(vars);
 	else
 		print_help();
