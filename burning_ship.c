@@ -34,11 +34,10 @@ int	burning_ship(t_point p, t_vars *vars)
 	double	tmp;
 	int		i;
 
-	(void)vars;
 	z.x = p.x;
 	z.y = p.y;
 	i = 0;
-	while (z.x * z.x + z.y * z.y <= 4 && i < MAX_ITERATIONS)
+	while (z.x * z.x + z.y * z.y <= 4 && i < vars->max_iterations)
 	{
 		tmp = z.x * z.x - z.y * z.y + p.x;
 		z.y = -2.0 * fabs(z.x * z.y) + p.y;

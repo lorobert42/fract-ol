@@ -35,13 +35,12 @@ int	cos_fractal(t_point p, t_vars *vars)
 	double	tmp;
 	int		i;
 
-	(void)vars;
 	z.x = p.x;
 	z.y = p.y;
 	c.x = p.x / (p.x * p.x + p.y * p.y);
 	c.y = p.y / (p.x * p.x + p.y * p.y);
 	i = 0;
-	while (z.x * z.x + z.y * z.y <= 10 * M_PI && i < MAX_ITERATIONS)
+	while (z.x * z.x + z.y * z.y <= 10 * M_PI && i < vars->max_iterations)
 	{
 		tmp = cos(z.x) * cosh(z.y) + c.x;
 		z.y = -(sin(z.x) * sinh(z.y)) - c.y;

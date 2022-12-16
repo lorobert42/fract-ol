@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lorobert <lorobert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lorobert <lorobert@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 11:45:59 by lorobert          #+#    #+#             */
-/*   Updated: 2022/12/15 14:03:14 by lorobert         ###   ########.fr       */
+/*   Updated: 2022/12/16 08:47:05 by lorobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,22 @@ int	key_hook(int keycode, t_vars *vars)
 {
 	if (keycode == K_ESC)
 		quit(vars);
-	if (keycode == K_LEFT || keycode == K_DOWN || keycode == K_RIGHT \
+	else if (keycode == K_LEFT || keycode == K_DOWN || keycode == K_RIGHT \
 		|| keycode == K_UP)
 		move_fractal(keycode, vars);
-	if (keycode == K_L)
+	else if (keycode == K_C)
 	{
-		vars->color_set = (vars->color_set + 1) % 3;
+		vars->color_set = (vars->color_set + 1) % 4;
+		compute_fractal(vars);
+		mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, \
+			vars->img->addr, 0, 0);
+	}
+	else if (keycode == K_NUM_PLUS || keycode == K_NUM_MINUS)
+	{	
+		if (keycode == K_NUM_PLUS)
+			vars->max_iterations += 10;
+		else
+			vars->max_iterations -= 10;
 		compute_fractal(vars);
 		mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, \
 			vars->img->addr, 0, 0);

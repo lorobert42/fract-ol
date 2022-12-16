@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lorobert <lorobert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lorobert <lorobert@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:00:45 by lorobert          #+#    #+#             */
-/*   Updated: 2022/12/15 14:02:01 by lorobert         ###   ########.fr       */
+/*   Updated: 2022/12/16 08:40:34 by lorobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #  define K_RIGHT		65363
 #  define K_DIGIT_1		49
 #  define K_L			108
+#  define K_C			99
 # else
 #  define K_ESC			53
 #  define K_NUM_MULT	67
@@ -40,5 +41,6 @@
 #  define K_RIGHT		124
 #  define K_DIGIT_1		18
 #  define K_L			37
+#  define K_C			8
 # endif
 #endif

@@ -33,13 +33,12 @@ int	mandelbrot(t_point p, t_vars *vars)
 	t_point	z2;
 	int		i;
 
-	(void)vars;
 	z.x = 0;
 	z.y = 0;
 	z2.x = 0;
 	z2.y = 0;
 	i = 0;
-	while (z2.x + z2.y <= 4 && i < MAX_ITERATIONS)
+	while (z2.x + z2.y <= 4 && i < vars->max_iterations)
 	{
 		z.y = 2 * z.x * z.y + p.y;
 		z.x = z2.x - z2.y + p.x;

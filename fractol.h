@@ -13,7 +13,6 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# define MAX_ITERATIONS 50
 # define WIDTH 800
 # define HEIGHT 600
 
@@ -42,6 +41,7 @@ typedef struct s_vars {
 	t_point	factor;
 	t_point	offset;
 	int		color_set;
+	int		max_iterations;
 }	t_vars;
 
 typedef struct s_color {
@@ -64,7 +64,7 @@ void	init_cos(t_vars *vars);
 int		cos_fractal(t_point p, t_vars *vars);
 
 // Colors
-t_color	get_color(int color, int set);
+t_color	get_color(int color, t_vars *vars);
 void	set_color(t_color color, int pixel, t_vars *vars);
 
 // Hooks

@@ -38,7 +38,7 @@ int	julia(t_point p, t_vars *vars)
 	z.x = p.x;
 	z.y = p.y;
 	i = 0;
-	while (z.x * z.x + z.y * z.y <= 4 && i < MAX_ITERATIONS)
+	while (z.x * z.x + z.y * z.y <= 4 && i < vars->max_iterations)
 	{
 		tmp = z.x * z.x - z.y * z.y + vars->offset.x;
 		z.y = 2.0 * z.x * z.y + vars->offset.y;
