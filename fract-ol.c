@@ -48,8 +48,6 @@ void	move_fractal(int keycode, t_vars *vars)
 		vars->max.y -= fabs(vars->min.y) * vars->factor.y * 10;
 	}
 	compute_fractal(vars);
-	mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, \
-		vars->img->addr, 0, 0);
 }
 
 void	print_help(void)
@@ -95,8 +93,6 @@ int	main(int argc, char **argv)
 	vars.color_set = 1;
 	vars.max_iterations = 50;
 	compute_fractal(&vars);
-	mlx_put_image_to_window(vars.mlx_ptr, vars.win_ptr, \
-			vars.img->addr, 0, 0);
 	hook(&vars);
 	mlx_loop(vars.mlx_ptr);
 }

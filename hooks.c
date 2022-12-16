@@ -6,7 +6,7 @@
 /*   By: lorobert <lorobert@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 11:45:59 by lorobert          #+#    #+#             */
-/*   Updated: 2022/12/16 08:47:05 by lorobert         ###   ########.fr       */
+/*   Updated: 2022/12/16 09:37:51 by lorobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	key_hook(int keycode, t_vars *vars)
 	{
 		vars->color_set = (vars->color_set + 1) % 4;
 		compute_fractal(vars);
-		mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, \
-			vars->img->addr, 0, 0);
 	}
 	else if (keycode == K_NUM_PLUS || keycode == K_NUM_MINUS)
 	{	
@@ -35,8 +33,6 @@ int	key_hook(int keycode, t_vars *vars)
 		else
 			vars->max_iterations -= 10;
 		compute_fractal(vars);
-		mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, \
-			vars->img->addr, 0, 0);
 	}
 	return (0);
 }
@@ -63,8 +59,6 @@ int	scroll_hook(int keycode, int x, int y, t_vars *vars)
 		vars->factor.x = (vars->max.x - vars->min.x) / (WIDTH - 1);
 		vars->factor.y = (vars->max.y - vars->min.y) / (HEIGHT - 1);
 		compute_fractal(vars);
-		mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, \
-			vars->img->addr, 0, 0);
 	}
 	return (0);
 }
