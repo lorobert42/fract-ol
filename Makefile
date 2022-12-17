@@ -29,7 +29,7 @@ LIBS_TARGET	:=	libft/libft.a mlx/libmlx.a
 INCS	:=	libft mlx
 
 CC		:=	gcc
-CFLAGS	:=	-Wall -Wextra -Werror -g
+CFLAGS	:=	-Wall -Wextra -Werror -g -pthread
 CPPFLAGS	:=	$(addprefix -I, $(INCS)) -MMD -MP
 LDFLAGS	:=	$(addprefix -L, $(dir $(LIBS_TARGET)))
 LDLIBS	:=	$(addprefix -l, $(LIBS))
@@ -45,9 +45,9 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
 ifeq ($(UNAME),Linux)
-	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME) -lXext -lX11 -lm
+	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME) -lXext -lX11 -lm -pthread
 else
-	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME) -framework OpenGL -framework Appkit -lm
+	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME) -framework OpenGL -framework Appkit -lm -pthread
 endif
 
 $(LIBS_TARGET):
