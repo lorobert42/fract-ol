@@ -14,7 +14,10 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
+	int	res;
+
 	if (fd < 0)
 		return ;
-	write(fd, &c, 1);
+	res = write(fd, &c, 1);
+	(void)res;
 }

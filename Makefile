@@ -29,7 +29,7 @@ LIBS_TARGET	:=	libft/libft.a mlx/libmlx.a
 INCS	:=	libft mlx
 
 CC		:=	gcc
-CFLAGS	:=	-Wall -Wextra -Werror -g
+CFLAGS	:=	-Wall -Wextra -Werror -O1
 CPPFLAGS	:=	$(addprefix -I, $(INCS)) -MMD -MP
 LDFLAGS	:=	$(addprefix -L, $(dir $(LIBS_TARGET)))
 LDLIBS	:=	$(addprefix -l, $(LIBS))

@@ -68,7 +68,7 @@ SRCS	:=	ft_isalnum.c \
 OBJS	:=	$(SRCS:.c=.o)
 
 CC		:=	gcc
-CFLAGS	:=	-Wall -Wextra -Werror
+CFLAGS	:=	-Wall -Wextra -Werror -O1
 
 RM		:=	rm -f
 
