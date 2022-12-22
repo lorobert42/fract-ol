@@ -29,30 +29,30 @@ void	move_fractal(int keycode, t_vars *vars)
 {
 	if (keycode == K_LEFT)
 	{
-		vars->min.x -= fabs(vars->min.x) * vars->factor.x * 10;
-		vars->max.x -= fabs(vars->min.x) * vars->factor.x * 10;
+		vars->min.x -= fabs(vars->min.x) * vars->factor.x * 50;
+		vars->max.x -= fabs(vars->min.x) * vars->factor.x * 50;
 	}
 	else if (keycode == K_RIGHT)
 	{
-		vars->min.x += fabs(vars->min.x) * vars->factor.x * 10;
-		vars->max.x += fabs(vars->min.x) * vars->factor.x * 10;
+		vars->min.x += fabs(vars->min.x) * vars->factor.x * 50;
+		vars->max.x += fabs(vars->min.x) * vars->factor.x * 50;
 	}
 	else if (keycode == K_UP)
 	{
-		vars->min.y += fabs(vars->min.y) * vars->factor.y * 10;
-		vars->max.y += fabs(vars->min.y) * vars->factor.y * 10;
+		vars->min.y += fabs(vars->min.y) * vars->factor.y * 50;
+		vars->max.y += fabs(vars->min.y) * vars->factor.y * 50;
 	}
 	else if (keycode == K_DOWN)
 	{
-		vars->min.y -= fabs(vars->min.y) * vars->factor.y * 10;
-		vars->max.y -= fabs(vars->min.y) * vars->factor.y * 10;
+		vars->min.y -= fabs(vars->min.y) * vars->factor.y * 50;
+		vars->max.y -= fabs(vars->min.y) * vars->factor.y * 50;
 	}
 	compute_fractal(vars);
 }
 
 void	print_help(void)
 {
-	ft_printf("Usage: ./fractol [type] [parameters]");
+	ft_printf("Usage: ./fractol [type] [parameters]\n");
 	ft_printf("Example: ./fractol mandelbrot");
 	exit(0);
 }
